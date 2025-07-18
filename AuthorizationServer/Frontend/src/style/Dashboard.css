@@ -1,0 +1,697 @@
+/* Base Styles & Variables */
+:root {
+  --primary-blue: #00aeef; /* Barclays primary blue */
+  --dark-blue: #00395d; /* Barclays dark blue */
+  --medium-blue: #006a8e;
+  --light-blue: #e6f4f9;
+  --accent-gold: #ffc72c;
+  --text-dark: #2d3748;
+  --text-medium: #4a5568;
+  --text-light: #f7fafc;
+  --border-light: #e2e8f0;
+  --success-green: #38a169;
+  --warning-orange: #dd6b20;
+  --error-red: #e53e3e;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: #f8fafc;
+}
+
+/* Loading Screen */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--light-blue);
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--light-blue);
+  border-top-color: var(--primary-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Dashboard Layout */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header Styles */
+.dashboard-header {
+  background: linear-gradient(135deg, var(--dark-blue), var(--medium-blue));
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bank-logo {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.branding h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.product-tag {
+  background-color: var(--accent-gold);
+  color: var(--dark-blue);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 1rem;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.welcome-msg {
+  font-weight: 500;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Main Content */
+.dashboard-main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Control Panel */
+.control-panel {
+  background-color: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.panel-header h2 {
+  color: var(--dark-blue);
+  font-size: 1.25rem;
+}
+
+.btn-primary {
+  background-color: var(--primary-blue);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: var(--medium-blue);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:disabled {
+  background-color: #cbd5e0;
+  cursor: not-allowed;
+}
+
+/* Data Grid Layout */
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Data Card Styles */
+.data-card {
+  background-color: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  padding: 1.25rem 1.5rem;
+  background-color: var(--light-blue);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.card-header h3 {
+  color: var(--dark-blue);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+  flex: 1;
+  overflow: auto;
+}
+
+/* Scope Card Specific Styles */
+.scope-info {
+  margin-bottom: 1.5rem;
+}
+
+.scope-info label,
+.scope-fields label {
+  display: block;
+  color: var(--text-medium);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.purpose {
+  background-color: var(--light-blue);
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  color: var(--dark-blue);
+  font-weight: 500;
+}
+
+.field-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.field-item {
+  background-color: var(--light-blue);
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.field-category {
+  color: var(--medium-blue);
+  font-weight: 600;
+}
+
+.field-name {
+  color: var(--text-dark);
+}
+
+/* Records Card Specific Styles */
+.records-card .card-body {
+  padding: 0;
+}
+
+.records-container {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+
+th {
+  background-color: var(--light-blue);
+  color: var(--dark-blue);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+}
+
+tr:hover {
+  background-color: rgba(0, 174, 239, 0.05);
+}
+
+/* Activity Card Specific Styles */
+.activity-table {
+  font-size: 0.8125rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.status-badge.approved {
+  background-color: rgba(56, 161, 105, 0.1);
+  color: var(--success-green);
+}
+
+.status-badge.pending {
+  background-color: rgba(221, 107, 32, 0.1);
+  color: var(--warning-orange);
+}
+
+.status-badge.rejected {
+  background-color: rgba(229, 62, 62, 0.1);
+  color: var(--error-red);
+}
+
+/* Empty State Styles */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--text-medium);
+  text-align: center;
+  min-height: 200px;
+}
+
+.empty-state i {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--border-light);
+}
+
+/* Footer Styles */
+.dashboard-footer {
+  background-color: var(--dark-blue);
+  color: white;
+  padding: 1.5rem 2rem;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.footer-left p:first-child {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .data-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .user-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .dashboard-main {
+    padding: 1rem;
+  }
+
+  .panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .field-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Data Object Display Styles */
+.data-object {
+  background-color: var(--light-blue);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.data-object div {
+  margin-bottom: 0.25rem;
+  font-size: 0.8125rem;
+}
+
+.data-object strong {
+  color: var(--medium-blue);
+  margin-right: 0.5rem;
+}
+
+/* Date Formatting */
+.date-time {
+  white-space: nowrap;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--light-blue);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--medium-blue);
+}
+
+/* Add these to your Dashboard.css */
+
+/* Field Tags */
+.field-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.field-tag {
+  background-color: var(--light-blue);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.field-separator {
+  color: var(--medium-blue);
+  margin: 0 0.125rem;
+}
+
+/* Data Object Display */
+.data-object {
+  background-color: var(--light-blue);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+}
+
+.data-field {
+  margin-bottom: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.data-field strong {
+  color: var(--medium-blue);
+  display: inline-block;
+  min-width: 80px;
+}
+
+.nested-object {
+  margin-left: 1rem;
+  margin-top: 0.25rem;
+  border-left: 2px solid var(--primary-blue);
+  padding-left: 0.75rem;
+}
+
+.nested-key {
+  color: var(--dark-blue);
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.nested-value {
+  color: var(--text-dark);
+}
+
+/* Date formatting */
+.date-time {
+  white-space: nowrap;
+  font-size: 0.8125rem;
+}
+/* Remove the old .data-grid styles and replace with: */
+
+/* Tab Navigation */
+.tab-navigation {
+  display: flex;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-medium);
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  color: var(--primary-blue);
+}
+
+.tab-btn.active {
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+.tab-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary-blue);
+}
+
+/* Tab Content */
+.tab-content {
+  background-color: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+/* Adjust card styles for tab layout */
+.tab-content .data-card {
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Field Tags (enhanced) */
+.field-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.field-tag {
+  background-color: var(--light-blue);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.field-category {
+  color: var(--medium-blue);
+  font-weight: 600;
+}
+
+.field-separator {
+  color: var(--medium-blue);
+  margin: 0 0.125rem;
+}
+
+.field-name {
+  color: var(--text-dark);
+}
+
+/* Table adjustments for tab layout */
+.tab-content table {
+  width: 100%;
+}
+
+.tab-content th {
+  position: sticky;
+  top: 0;
+  background-color: var(--light-blue);
+  z-index: 10;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tab-navigation {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .tab-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  .tab-content {
+    overflow-x: auto;
+  }
+}
+
+.action-btn {
+  background-color: var(--primary-blue);
+  color: var(--white);
+  border: none;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  line-height: 1.5;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.action-btn:hover {
+  background-color: var(--medium-blue);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+  transition-duration: 0.1s;
+}
+
+.action-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--white);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.action-btn:hover::after {
+  opacity: 0.1;
+}
