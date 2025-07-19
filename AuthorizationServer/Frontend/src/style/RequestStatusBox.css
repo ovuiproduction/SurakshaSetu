@@ -16,7 +16,7 @@
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  max-width: 400px;
+  max-width: max-content;
   width: 90%;
   text-align: center;
   animation: fadeIn 0.3s ease-out;

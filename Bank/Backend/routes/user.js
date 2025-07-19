@@ -79,4 +79,15 @@ router.post("/verify-user", async (req, res) => {
   }
 });
 
+router.get("/fetch-users", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.json({
+      users,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch users." });
+  }
+});
+
 module.exports = router;

@@ -1,88 +1,79 @@
-import React, { useEffect, useState } from "react";
-import { fetchAllVendors, fetchLogsByVendor } from "../api/adminApi";
-import VendorSelector from "../components/AdminDashboard/VendorSelector";
-import LogViewer from "../components/AdminDashboard/LogViewer";
-import "../style/AdminDashboard.css";
+import React from "react";
+import { Link } from "react-router-dom";
+import "../style/MainAdminDashboard.css";
 
 const AdminDashboard = () => {
-  const [vendors, setVendors] = useState([]);
-  const [selectedVendor, setSelectedVendor] = useState("");
-  const [userIdFilter, setUserIdFilter] = useState("");
-  const [logs, setLogs] = useState([]);
-  const [loadingLogs, setLoadingLogs] = useState(false);
-
-  useEffect(() => {
-    const getVendors = async () => {
-      try {
-        const data = await fetchAllVendors();
-        setVendors(data.vendors);
-      } catch (err) {
-        console.error("Error fetching vendors", err);
-      }
-    };
-    getVendors();
-  }, []);
-
-  useEffect(() => {
-    const getLogs = async () => {
-      if (!selectedVendor) return;
-      setLoadingLogs(true);
-      try {
-        const data = await fetchLogsByVendor(selectedVendor);
-        setLogs(data.logs);
-      } catch (err) {
-        console.error("Error fetching logs", err);
-      } finally {
-        setLoadingLogs(false);
-      }
-    };
-    getLogs();
-  }, [selectedVendor]);
-
-  const filteredLogs = userIdFilter
-    ? logs.filter(log => 
-        log.userId && log.userId.toLowerCase().includes(userIdFilter.toLowerCase())
-      )
-    : logs;
+  const dashboardCards = [
+    {
+      title: "Audit Logs",
+      description: "Perform security audits on vendor access logs",
+      icon: "🔍",
+      path: "/admin/log-audit"
+    },
+    {
+      title: "Audit Reports",
+      description: "View previously generated compliance reports",
+      icon: "📋",
+      path: "/admin/audit-reports"
+    },
+    {
+      title: "Vendor Management",
+      description: "Manage third-party vendor permissions",
+      icon: "🏛️",
+      path: "/admin/vendors"
+    },
+    {
+      title: "System Monitoring",
+      description: "Real-time system activity dashboard",
+      icon: "📊",
+      path: "/admin/system-monitoring"
+    },
+    {
+      title: "User Access",
+      description: "Manage administrator permissions",
+      icon: "👤",
+      path: "/admin/user-access"
+    },
+    {
+      title: "Compliance",
+      description: "GDPR/DPDP compliance tools",
+      icon: "⚖️",
+      path: "/admin/compliance"
+    }
+  ];
 
   return (
-    <div className="admin-dashboard">
-      <div className="dashboard-header">
-        <h2>Admin Dashboard</h2>
-      </div>
-      
-      <div className="filters-container">
-        <div className="vendor-selector-container">
-          <VendorSelector
-            vendors={vendors}
-            selectedVendor={selectedVendor}
-            onChange={setSelectedVendor}
-          />
-        </div>
-        
-        <div className="user-filter-container">
-          <label>Filter by User ID:</label>
-          <input
-            type="text"
-            value={userIdFilter}
-            onChange={(e) => setUserIdFilter(e.target.value)}
-            placeholder="Enter user ID"
-            className="filter-input"
-            disabled={!selectedVendor}
-          />
-        </div>
+    <div className="main_admin-dashboard">
+      <div className="admin-dashboard__header">
+        <h1 className="admin-dashboard__title">Security Administration</h1>
+        <p className="admin-dashboard__subtitle">
+          Last accessed: {new Date().toLocaleDateString('en-US', { 
+            weekday: 'short', 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+          })}
+        </p>
       </div>
 
-      {loadingLogs ? (
-        <p className="loading-logs">Loading logs...</p>
-      ) : (
-        <div className="log-viewer-container">
-          <LogViewer 
-            logs={filteredLogs} 
-            userIdFilter={userIdFilter}
-          />
+      <div className="admin-dashboard__content">
+        <div className="admin-dashboard__card-grid">
+          {dashboardCards.map((card, index) => (
+            <Link
+              to={card.path}
+              key={index}
+              className="admin-dashboard__card"
+            >
+              <div className="admin-dashboard__card-icon">{card.icon}</div>
+              <div className="admin-dashboard__card-text">
+                <h3>{card.title}</h3>
+                <p>{card.description}</p>
+              </div>
+              <div className="admin-dashboard__card-badge">→</div>
+            </Link>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };

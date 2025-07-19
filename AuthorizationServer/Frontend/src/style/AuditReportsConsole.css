@@ -1,0 +1,132 @@
+/* Main Container */
+.audit-reports-console {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Header Styles */
+.audit-reports-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+.audit-reports-header h2 {
+  font-size: 1.75rem;
+  color: #2d3748;
+  margin: 0;
+}
+
+/* Filter Styles */
+.audit-reports-filter {
+  display: flex;
+  align-items: center;
+}
+
+.vendor-filter-select {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid #cbd5e0;
+  background-color: white;
+  font-size: 0.9rem;
+  min-width: 250px;
+}
+
+/* Reports Grid */
+.audit-reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Report Card */
+.audit-report-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.audit-report-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #4299e1;
+}
+
+.audit-report-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.audit-report-card-header h3 {
+  font-size: 1.1rem;
+  color: #2d3748;
+  margin: 0;
+}
+
+.audit-report-date {
+  font-size: 0.8rem;
+  color: #718096;
+}
+
+.audit-report-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.audit-report-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #4a5568;
+}
+
+.audit-report-preview {
+  font-size: 0.9rem;
+  color: #4a5568;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Loading and Error States */
+.audit-reports-loading,
+.audit-reports-error,
+.no-reports {
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #4a5568;
+}
+
+.audit-reports-error {
+  color: #e53e3e;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .audit-reports-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .audit-reports-grid {
+    grid-template-columns: 1fr;
+  }
+}

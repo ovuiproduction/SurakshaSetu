@@ -15,7 +15,7 @@ const DB_URL = process.env.DB_URL;
 
 
 const gatewayRoutes = require("./routes/gatewayRoutes");
-
+const adminRoutes = require("./routes/adminRoutes");
 // Connect to MongoDB
 mongoose
   .connect(DB_URL, {
@@ -28,6 +28,7 @@ mongoose
 
 // Routes
 app.use("/api/gateway", gatewayRoutes);
+app.use("/api/admin",adminRoutes);
 
 app.get('/',(req,res)=>{
     res.send(`API Gateway Server running on port ${PORT}`);

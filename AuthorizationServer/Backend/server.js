@@ -10,7 +10,7 @@ const consentRoutes =  require("./routes/consentRoutes");
 const thirdPartyRoutes = require("./routes/thirdPartyRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const startCronJobs = require('./utils/cronJobs');
-
+const logger = require("./utils/logger");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -21,6 +21,7 @@ console.log(DB_URL);
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(logger);
 
 // Connect to MongoDB
 mongoose
