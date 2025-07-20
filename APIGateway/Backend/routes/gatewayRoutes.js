@@ -68,6 +68,8 @@ router.post("/get-user-data", authenticateJWT, apiLimiter, async (req, res) => {
   const { clientId, sub: userId, scope, purpose, consentId } = req.user;
   const { tokenId } = req.body;
 
+  console.log("ok");
+
   try {
     const consentApprovalResponse = await axios.post(
       `http://localhost:${process.env.AUTH_SERVER_PORT}/api/consent/verify-status`,
@@ -79,6 +81,7 @@ router.post("/get-user-data", authenticateJWT, apiLimiter, async (req, res) => {
       }
     );
 
+     console.log("ok");
     if (
       consentApprovalResponse.status != 200 ||
       !consentApprovalResponse.data.status

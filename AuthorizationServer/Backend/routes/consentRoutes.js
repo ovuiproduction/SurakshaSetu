@@ -6,10 +6,11 @@ require("dotenv").config();
 const axios = require("axios");
 const logEvent = require("../utils/logEvent");
 
-
 router.post("/initiate", async (req, res) => {
   const { userId, clientId, clientSecret, scope, purpose, callbackUrl } =
     req.body;
+
+  console.log(clientId, clientSecret);
 
   // Verify vendor credentials
   const vendor = await Vendor.findOne({ clientId });
@@ -186,10 +187,10 @@ router.post("/initiate", async (req, res) => {
         message: msg,
       },
     });
-    res.status(200).json({ message: "Consent initiated.", consentId });
+    return res.status(200).json({ message: "Consent initiated.", consentId });
   } catch (err) {
     console.error("Consent initiation error:", err.message);
-    res.status(500).json({ message: "Consent request failed." });
+    return res.status(500).json({ message: "Consent request failed." });
   }
 });
 
@@ -229,7 +230,7 @@ router.post("/approve-consent", async (req, res) => {
           expiresAt,
         });
       } catch (callbackErr) {
-        res.status(500).json({ message: callbackErr.message });
+        return res.status(500).json({ message: callbackErr.message });
       }
     }
 
@@ -246,7 +247,9 @@ router.post("/approve-consent", async (req, res) => {
         message: msg,
       },
     });
-    res.status(200).json({ message: "Consent approved and vendor notified" });
+    return res
+      .status(200)
+      .json({ message: "Consent approved and vendor notified" });
   } catch (err) {
     res
       .status(500)
@@ -276,11 +279,11 @@ router.post("/reject-consent", async (req, res) => {
           status: consent.status,
           scope: consent.userApprovedScope,
           purpose: consent.purpose,
-          approvedAt,
-          expiresAt,
+          approvedAt: consent.approvedAt,
+          expiresAt: consent.expiresAt,
         });
       } catch (callbackErr) {
-        res.status(500).json({ message: callbackErr });
+        return res.status(500).json({ message: callbackErr });
       }
     }
 
@@ -297,9 +300,11 @@ router.post("/reject-consent", async (req, res) => {
         message: msg,
       },
     });
-    res.status(200).json({ message: "Consent rejected and vendor notified" });
+    return res
+      .status(200)
+      .json({ message: "Consent rejected and vendor notified" });
   } catch (err) {
-    res
+    return res
       .status(500)
       .json({ message: `Error approving consent : ${err.message}` });
   }
@@ -319,26 +324,38 @@ router.post("/revoke", async (req, res) => {
     }
 
     consent.status = "revoked";
-    consent.revokedAt = new Date(); // optional, add to schema if needed
+    consent.revokedAt = new Date();
     await consent.save();
 
-    // Optional: Notify vendor of revocation
     if (consent.callbackUrl) {
       try {
-        await axios.post(consent.callbackUrl, {
-          consentId: consent._id,
-          userId: consent.userId,
-          status: "revoked",
-          revokedAt: consent.revokedAt,
-        });
+        await axios.post(
+          consent.callbackUrl,
+          {
+            clientId: consent.clientId,
+            consentId: consent._id,
+            userId: consent.userId,
+            status: consent.status,
+            scope: consent.userApprovedScope,
+            purpose: consent.purpose,
+            approvedAt: consent.approvedAt,
+            expiresAt: consent.expiresAt,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
       } catch (err) {
-        res
-          .status(500)
-          .json({ message: `Failed to notify vendor: ${err.message}` });
+        // Added return here to prevent further execution
+        return res.status(500).json({
+          message: `Failed to notify vendor: ${err.message}`,
+        });
       }
     }
 
-    const msg = `Consent revoked & Callback Successfully.`;
+    const msg = `Consent revoked & Callback Successful.`;
     await logEvent({
       vendorId: consent.clientId,
       userId: consent.userId,
@@ -352,12 +369,13 @@ router.post("/revoke", async (req, res) => {
       },
     });
 
-    res.status(200).json({ message: "Consent successfully revoked" });
+    return res.status(200).json({ message: "Consent successfully revoked" });
   } catch (err) {
-    res.status(500).json({ message: `Error revoking consent: ${err.message}` });
+    return res
+      .status(500)
+      .json({ message: `Error revoking consent: ${err.message}` });
   }
 });
-
 
 router.post("/verify-status", async (req, res) => {
   const { consentId } = req.body;
@@ -388,17 +406,16 @@ router.post("/verify-status", async (req, res) => {
     .json({ message: "Consent is valid & approved", status: true });
 });
 
-
 router.post("/get-consent-data", async (req, res) => {
   const { userId } = req.body;
   const consentList = await ConsentRequest.find({ userId: userId });
-  res.status(200).json({ consentList });
+  return res.status(200).json({ consentList });
 });
 
 router.get("/get-vendor-history", async (req, res) => {
   const { clientId } = req.query;
   const consentList = await ConsentRequest.find({ clientId: clientId });
-  res.status(200).json({ consentList });
+  return res.status(200).json({ consentList });
 });
 
 module.exports = router;

@@ -34,10 +34,10 @@ router.post("/get-data", async (req, res) => {
       return acc;
     }, {});
 
-    res.status(200).json({ userId, data: filteredData });
+    return res.status(200).json({ userId, data: filteredData });
   } catch (err) {
     console.error("Error filtering user data:", err);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 

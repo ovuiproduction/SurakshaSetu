@@ -16,26 +16,26 @@ router.get("/fetch-logs", async (req, res) => {
   try {
     const logs = await ActionLog.find({ vendorId }).sort({ timestamp: -1 });
 
-    res.json({
+    return res.status(200).json({
       message: `Logs for vendor ${vendorId}`,
       count: logs.length,
       logs,
     });
   } catch (err) {
     console.error("Error fetching logs:", err.message);
-    res.status(500).json({ message: "Failed to fetch logs." });
+    return res.status(500).json({ message: "Failed to fetch logs." });
   }
 });
 
 router.get("/fetch-vendors", async (req, res) => {
   try {
     const vendors = await Vendor.find({});
-    res.json({
+    return res.status(200).json({
       vendors,
     });
   } catch (err) {
     console.error("Error fetching vendors:", err.message);
-    res.status(500).json({ message: "Failed to fetch vendors." });
+    return res.status(500).json({ message: "Failed to fetch vendors." });
   }
 });
 
@@ -76,13 +76,13 @@ router.put("/audit/save-report", async (req, res) => {
     const body = report;
     sendMail(to, subject, body);
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Audit report saved successfully",
       reportId: savedReport._id,
     });
   } catch (err) {
     console.error("Error saving audit report:", err.message);
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to save audit report",
       error: err.message,
     });
@@ -93,13 +93,13 @@ router.put("/audit/save-report", async (req, res) => {
 router.get("/audit/fetch-all-reports", async (req, res) => {
   try {
     const reports = await AuditReport.find({});
-    res.status(200).json({
+    return res.status(200).json({
       message: "Audit reports fetched successfully",
       data: reports,
     });
   } catch (err) {
     console.error("Error fetching audit reports:", err.message);
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to fetch audit reports",
       error: err.message,
     });
@@ -118,13 +118,13 @@ router.get("/audit/fetch-reports", async (req, res) => {
     const query = { vendorId };
 
     const reports = await AuditReport.find(query).sort({ timestamps: -1 });
-    res.status(200).json({
+    return res.status(200).json({
       message: "Vendor audit reports fetched successfully",
       data: reports,
     });
   } catch (err) {
     console.error("Error fetching vendor audit reports:", err.message);
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to fetch vendor audit reports",
       error: err.message,
     });
@@ -137,9 +137,9 @@ router.get("/system-logs/authorization-server", async (req, res) => {
       .sort({ timestamp: -1 }) // Show newest first
       .limit(100); // Limit logs for performance
 
-    res.json({ logs });
+    return res.status(200).json({ logs });
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to fetch authorization server logs",
       error: err,
     });

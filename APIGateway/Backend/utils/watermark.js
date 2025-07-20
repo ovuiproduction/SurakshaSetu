@@ -3,11 +3,12 @@ const fs = require("fs");
 
 
 function addEncryptedWatermark(data, watermarkInfo) {
-  const publicKey = fs.readFileSync("gateway_private.pem", "utf-8");  key
+  const publicKey = fs.readFileSync("gateway_private.pem", "utf-8");
   const watermark = {
     vendorId: watermarkInfo.clientId,
     userId: watermarkInfo.userId,
     consentId: watermarkInfo.consentId,
+    tokenId:watermarkInfo.tokenId,
     timestamp: Date.now(),
   };
 

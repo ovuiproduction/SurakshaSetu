@@ -39,15 +39,15 @@ const maskField = (key, value) => {
 function maskData(scope, response) {
   const userId = response.userId;
   const responseData = response.data;
+  console.log("MaskData");
   const maskedData = {};
-  console.log(responseData);
   for (const key of scope) {
     const field = key.split(":")[1];
-    console.log(field);
     if (responseData[field] !== undefined) {
       maskedData[field] = maskField(key, responseData[field]);
     }
   }
+  console.log("MaskData Done");
   const data = { userId: userId, data: maskedData };
   return data;
 }

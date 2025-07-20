@@ -11,10 +11,10 @@ router.get("/profile/:userId", async (req, res) => {
     const user = await User.findOne({ userId });
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    res.json({ user });
+    return res.status(200).json({ user });
   } catch (err) {
     console.error("Error fetching user profile:", err);
-    res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -57,12 +57,12 @@ router.post("/transaction", async (req, res) => {
 
     await user.save();
 
-    res
+    return res
       .status(200)
       .json({ message: "Transaction recorded and balance updated" });
   } catch (err) {
     console.error("Transaction error:", err);
-    res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -72,21 +72,21 @@ router.post("/verify-user", async (req, res) => {
     // Fetch user info
     const user = await User.findOne({ userId });
     if (!user) return res.status(404).json({ message: "User not found" });
-    res.status(200).json({ user });
+    return res.status(200).json({ user });
   } catch (err) {
     console.error("Error fetching user profile:", err);
-    res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Server error" });
   }
 });
 
 router.get("/fetch-users", async (req, res) => {
   try {
     const users = await User.find({});
-    res.json({
+    return res.json({
       users,
     });
   } catch (err) {
-    res.status(500).json({ message: "Failed to fetch users." });
+    return res.status(500).json({ message: "Failed to fetch users." });
   }
 });
 

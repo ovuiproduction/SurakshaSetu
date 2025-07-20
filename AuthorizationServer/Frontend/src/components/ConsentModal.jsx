@@ -23,7 +23,7 @@ const AVAILABLE_FIELDS = [
 ];
 
 const ConsentModal = ({ vendor, onClose }) => {
-  const [userId, setUserID] = useState("USER-4B97980E");
+  const [userId, setUserID] = useState("USER-CA20FBAA");
   const [callbackUrl, setCallbackUrl] = useState(
     "http://localhost:5001/api/consent/callback"
   );

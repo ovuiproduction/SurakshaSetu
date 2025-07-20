@@ -11,9 +11,9 @@ router.get('/system-logs/apigateway-server', async (req, res) => {
       .sort({ createdAt: -1 })  // latest logs first
       .limit(100);              // limit for performance
 
-    res.json({ logs });
+    return res.json({ logs });
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch logs', error: err });
+    return res.status(500).json({ message: 'Failed to fetch logs', error: err });
   }
 });
 

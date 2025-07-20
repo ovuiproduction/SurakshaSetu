@@ -267,6 +267,7 @@ const Dashboard = () => {
           <button
             className={`tab-btn ${activeTab === "activity" ? "active" : ""}`}
             onClick={() => {
+              fetchRequestHistory();
               setActiveTab("activity");
             }}
           >
@@ -600,12 +601,12 @@ const Dashboard = () => {
                               </div>
                             </td>
                             <td>
-                              <div className="data-object">
+                              {/* <div className="data-object">
                                 {Object.entries(record.data).map(
                                   ([key, value]) => (
                                     <div key={key} className="data-field">
                                       <strong>{key}:</strong>
-                                      {typeof value === "object" &&
+                                      {typeof value === "object"  &&
                                       value !== null ? (
                                         <div className="nested-object">
                                           {Object.entries(value).map(
@@ -631,6 +632,43 @@ const Dashboard = () => {
                                       )}
                                     </div>
                                   )
+                                )}
+                              </div> */}
+                              <div className="data-object">
+                                {Object.entries(record.data).map(
+                                  ([key, value]) => {
+                                    if (key === "_watermark") return null; // Skip rendering
+
+                                    return (
+                                      <div key={key} className="data-field">
+                                        <strong>{key}:</strong>
+                                        {typeof value === "object" &&
+                                        value !== null ? (
+                                          <div className="nested-object">
+                                            {Object.entries(value).map(
+                                              ([nestedKey, nestedValue]) => (
+                                                <div key={nestedKey}>
+                                                  <span className="nested-key">
+                                                    {nestedKey}:
+                                                  </span>
+                                                  <span className="nested-value">
+                                                    {typeof nestedValue ===
+                                                    "string"
+                                                      ? nestedValue
+                                                      : JSON.stringify(
+                                                          nestedValue
+                                                        )}
+                                                  </span>
+                                                </div>
+                                              )
+                                            )}
+                                          </div>
+                                        ) : (
+                                          <span>{value?.toString()}</span>
+                                        )}
+                                      </div>
+                                    );
+                                  }
                                 )}
                               </div>
                             </td>

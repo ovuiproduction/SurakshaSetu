@@ -1,0 +1,57 @@
+title Secure Data Exchange Between Bank and Third-Party Vendor
+
+participant Vendor
+participant AuthorizationServer
+participant User
+participant APIGateway
+participant BankServer
+
+== Vendor initiates consent flow ==
+Vendor->AuthorizationServer: Register (scope,purpose) 
+note over AuthorizationServer: validate scope & purpose\n Stores vendor details
+AuthorizationServer->Vendor:clientId, clientSecret
+
+Vendor->AuthorizationServer: Request consent (userId,clientId,clientSecret,purpose,scope,validity)
+note over AuthorizationServer: Authenticate & Authorize vendor
+
+AuthorizationServer->User: Request consent 
+
+User-->AuthorizationServer: Grants consent
+note over AuthorizationServer,User: Stores consent with userId, vendorId, scope, validity
+
+AuthorizationServer->Vendor: Callback (Consent Approved/Rejected/Revoked)
+
+
+== Token Request ==
+Vendor->AuthorizationServer: Request JWT (with consentId)
+AuthorizationServer-->Vendor: JWT Token (signed, short-lived)
+
+
+== Data Request via API Gateway ==
+Vendor->APIGateway: Data request (JWT Token)
+APIGateway->AuthorizationServer: Validate JWT & consent
+AuthorizationServer-->APIGateway: Consent Valid
+
+APIGateway->BankServer: Fetch data for userId with scope
+BankServer-->APIGateway: Raw user data (all fields)
+
+note over APIGateway: - Apply data masking based on scope\n- Add encrypted watermark (clientId, userId, consentId,tokenId, timestamp)\n- Sign response with gateway private key
+
+APIGateway-->Vendor: Masked, signed, watermarked data
+
+
+== Logging ==
+APIGateway->AuthorizationServer: Log request metadata
+note over AuthorizationServer: - Generate Audit reports\n- View & Analyze Logs
+
+AuthorizationServer->Vendor:Reporting Violations & Audit Repor 
+
+== Expired or Invalid Token ==
+Vendor->APIGateway: /get-user-data with expired JWT
+APIGateway->AuthorizationServer: Validate JWT
+AuthorizationServer-->APIGateway: Token Expired
+
+APIGateway-->Vendor: 401 Unauthorized\nToken expired
+
+note over Vendor,APIGateway: Vendor can request new token if consent still valid
+end note

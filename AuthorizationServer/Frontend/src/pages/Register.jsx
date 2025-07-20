@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../style/Register.css";
 
-const AUTH_SERVER_PORT =  process.env.REACT_APP_AUTH_SERVER_PORT;
-
+const AUTH_SERVER_PORT = process.env.REACT_APP_AUTH_SERVER_PORT;
 
 const Register = () => {
   const navigate = useNavigate();
@@ -171,6 +170,39 @@ const Register = () => {
                 <div className="checkbox-item">
                   <input
                     type="checkbox"
+                    id="kyc-aadhaar"
+                    name="dataFields"
+                    value="kyc:aadhaar"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="kyc-pan">Aadhaar Number</label>
+                </div>
+
+                <div className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="kyc-gender"
+                    name="dataFields"
+                    value="kyc:gender"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="kyc-pan">Gender</label>
+                </div>
+
+                <div className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="kyc-address"
+                    name="dataFields"
+                    value="kyc:address"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="kyc-pan">Address</label>
+                </div>
+
+                <div className="checkbox-item">
+                  <input
+                    type="checkbox"
                     id="contact-email"
                     name="dataFields"
                     value="contact:email"
@@ -182,20 +214,42 @@ const Register = () => {
                 <div className="checkbox-item">
                   <input
                     type="checkbox"
-                    id="account-type"
+                    id="contact-phone"
                     name="dataFields"
-                    value="account:type"
+                    value="contact:phone"
                     onChange={handleChange}
                   />
-                  <label htmlFor="account-type">Account Type</label>
+                  <label htmlFor="contact-email">Phone</label>
                 </div>
 
                 <div className="checkbox-item">
                   <input
                     type="checkbox"
-                    id="account-balance"
+                    id="account-accountNumber"
                     name="dataFields"
-                    value="account:balance"
+                    value="account:accountNumber"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="account-type">Account Number</label>
+                </div>
+
+                <div className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="account-salary"
+                    name="dataFields"
+                    value="account:salary"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="account-type">Salary</label>
+                </div>
+
+                <div className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="account-bankBalance"
+                    name="dataFields"
+                    value="account:bankBalance"
                     onChange={handleChange}
                   />
                   <label htmlFor="account-balance">Account Balance</label>
@@ -204,47 +258,14 @@ const Register = () => {
                 <div className="checkbox-item">
                   <input
                     type="checkbox"
-                    id="transactions-summary"
-                    name="dataFields"
-                    value="transaction:summary"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="transactions-summary">Monthly Summary</label>
-                </div>
-
-                <div className="checkbox-item">
-                  <input
-                    type="checkbox"
                     id="transactions-history"
                     name="dataFields"
-                    value="transaction:history"
+                    value="transactions:transactions"
                     onChange={handleChange}
                   />
                   <label htmlFor="transactions-history">
                     Transaction History
                   </label>
-                </div>
-
-                <div className="checkbox-item">
-                  <input
-                    type="checkbox"
-                    id="loan-summary"
-                    name="dataFields"
-                    value="loan:summary"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="loan-summary">Loan Summary</label>
-                </div>
-
-                <div className="checkbox-item">
-                  <input
-                    type="checkbox"
-                    id="credit-score"
-                    name="dataFields"
-                    value="credit:score"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="credit-score">Credit Score</label>
                 </div>
 
                 <div className="checkbox-item">

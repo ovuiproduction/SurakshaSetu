@@ -1,11 +1,13 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 import logo from "../images/logo.png";
 
 export default function Header({ vendor }) {
+  const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem("vendor");
-    navigate("/login");
+    navigate("/");
   };
 
   return (

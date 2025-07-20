@@ -27,7 +27,7 @@ router.put("/store-fetched-data", async (req, res) => {
 
     await fetchedRecord.save();
 
-    res.status(201).json({ message: "User data stored successfully" });
+    return res.status(201).json({ message: "User data stored successfully" });
   } catch (error) {
     res
       .status(500)
@@ -41,7 +41,7 @@ router.get("/fetch-records", async (req, res) => {
     const records = await FetchedUserData.find({ clientId: clientId }).sort({
       fetchedAt: -1,
     }); // most recent first
-    res.status(200).json(records);
+    return res.status(200).json(records);
   } catch (err) {
     res
       .status(500)

@@ -45,9 +45,9 @@ router.post("/register-user", async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json({ message: "User registered", userId });
+    return res.status(201).json({ message: "User registered", userId });
   } catch (err) {
-    res.status(500).json({ message: "Registration failed", error: err.message });
+    return res.status(500).json({ message: "Registration failed", error: err.message });
   }
 });
 
@@ -75,9 +75,9 @@ router.post("/login/request-otp", async (req, res) => {
       text: `Your OTP for login is: ${otp}`,
     });
 
-    res.json({ message: "OTP sent to email" });
+    return res.json({ message: "OTP sent to email" });
   } catch (err) {
-    res.status(500).json({ message: "OTP request failed", error: err.message });
+    return res.status(500).json({ message: "OTP request failed", error: err.message });
   }
 });
 
@@ -98,9 +98,9 @@ router.post("/login/verify-otp", async (req, res) => {
     user.otpExpiry = null;
     await user.save();
 
-    res.json({ message: "Login successful", user:user });
+    return res.json({ message: "Login successful", user:user });
   } catch (err) {
-    res.status(500).json({ message: "OTP verification failed", error: err.message });
+    return res.status(500).json({ message: "OTP verification failed", error: err.message });
   }
 });
 

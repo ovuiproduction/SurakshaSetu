@@ -236,9 +236,9 @@ const tokenHandler = async (req, res) => {
       },
     });
     // Step 7: Return token
-    res.status(200).json({ message: msg, token });
+    return res.status(200).json({ message: msg, token });
   } catch (err) {
-    res.status(500).json({ message: `Token issuance failed : ${err}` });
+    return res.status(500).json({ message: `Token issuance failed : ${err}` });
   }
 };
 

@@ -53,14 +53,14 @@ router.post("/register", async (req, res) => {
 
     await newVendor.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Vendor registered successfully!",
       clientId,
       clientSecret,
     });
   } catch (err) {
     console.error("Registration error:", err);
-    res.status(500).json({ message: "Registration failed.", error: err });
+    return res.status(500).json({ message: "Registration failed.", error: err });
   }
 });
 
@@ -86,7 +86,7 @@ router.post("/request-otp", async (req, res) => {
     text: `Your OTP is: ${otp}`,
   });
 
-  res.json({ message: "OTP sent to your email" });
+  return res.json({ message: "OTP sent to your email" });
 });
 
 // Verify OTP
@@ -105,7 +105,7 @@ router.post("/verify-otp", async (req, res) => {
   vendor.otpExpiry = null;
   await vendor.save();
 
-  res.json({
+  return res.status(200).json({
     message: "Login success",
     vendor: {
       orgName: vendor.orgName,
@@ -140,13 +140,13 @@ router.get("/verify-session", async (req, res) => {
     }
 
     // If we get here, verification is successful
-    res.status(200).json({
+    return res.status(200).json({
       verified: true,
       vendor: vendor,
     });
   } catch (err) {
     console.error("Session verification error:", err);
-    res.status(500).json({ message: "Server error during verification" });
+    return res.status(500).json({ message: "Server error during verification" });
   }
 });
 
@@ -207,6 +207,7 @@ router.post("/consent/callback", async (req, res) => {
 
 router.post("/vendor/apigateway/data-req", async (req, res) => {
   let { jwtToken, tokenId, userId, clientId, consentId } = req.body;
+   console.log("ok");
   try {
     const gatewayResponse = await axios.post(
       `http://localhost:${process.env.GATEWAY_SERVER_PORT}/api/gateway/get-user-data`,
@@ -226,7 +227,7 @@ router.post("/vendor/apigateway/data-req", async (req, res) => {
       verify.end();
 
       const isVerified = verify.verify(publicKey, signature, "base64");
-
+       console.log(isVerified);
       if (!isVerified) {
         const msg = "Signature verification failed. Untrusted data.";
         await logEvent({
@@ -242,7 +243,7 @@ router.post("/vendor/apigateway/data-req", async (req, res) => {
             message: msg,
           },
         });
-        res.status(401).json({ message: msg });
+        return res.status(401).json({ message: msg });
       }
 
       let { userId, clientId, consentId, purpose, fields, data } = payload;
@@ -274,7 +275,7 @@ router.post("/vendor/apigateway/data-req", async (req, res) => {
               message: msg,
             },
           });
-          res.status(200).json({
+          return res.status(200).json({
             message: "Callback sucessfull. Data Sent succesfully.",
           });
         }
@@ -285,7 +286,7 @@ router.post("/vendor/apigateway/data-req", async (req, res) => {
         } else {
           message = err.message;
         }
-        res.status(500).json({
+        return res.status(500).json({
           message: `Error Storing fetched data : ${message}`,
         });
       }
@@ -298,7 +299,7 @@ router.post("/vendor/apigateway/data-req", async (req, res) => {
     } else {
       message = err.message;
     }
-    res.status(401).json({
+    return res.status(401).json({
       message: `Error fetching data from API Gateway : ${message}`,
     });
   }
@@ -312,10 +313,10 @@ router.get("/vendor/fetch-callbacks", async (req, res) => {
       .populate("consentId", "purpose scope status") // optional: populate consent data
       .sort({ sentAt: -1 }); // recent first
 
-    res.status(200).json({ success: true, callbacks });
+    return res.status(200).json({ success: true, callbacks });
   } catch (err) {
     console.error("Error fetching callbacks:", err);
-    res
+    return res
       .status(500)
       .json({ success: false, message: "Server error fetching callback logs" });
   }
@@ -325,9 +326,9 @@ router.get("/vendor/fetch-tokens", async (req, res) => {
   try {
     const { clientId } = req.query;
     const tokens = await IssuedToken.find({ clientId }).sort({ issuedAt: -1 }); // recent first
-    res.status(200).json({ success: true, tokens });
+    return res.status(200).json({ success: true, tokens });
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: `Server error fetching callback logs : ${err.message}`,
     });
