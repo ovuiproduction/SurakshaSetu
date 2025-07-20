@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   userId: { type: String, unique: true, required: true },
-  fullName: String,
+  name: String,
   email: { type: String, required: true, unique: true },
   phone: String,
   dob: Date,
   gender: String,
-  pan: String,
+  pan: { type: String, required: true, unique: true },
+  aadhaar:{ type: String, required: true, unique: true },
   address: String,
   accountNumber: { type: String, required: true },
   salary: Number,

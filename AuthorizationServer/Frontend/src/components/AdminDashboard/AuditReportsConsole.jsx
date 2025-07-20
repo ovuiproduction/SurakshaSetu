@@ -4,6 +4,8 @@ import AuditResponseDisplay from "./AuditResponseDisplay";
 import "../../style/AuditReportsConsole.css";
 import { Link } from "react-router-dom";
 
+import Footer from "./Footer";
+
 const AuditReportsConsole = () => {
   const [reports, setReports] = useState([]);
   const [vendors, setVendors] = useState([]);
@@ -121,6 +123,8 @@ const AuditReportsConsole = () => {
           vendorName={selectedReport.vendorName}
         />
       )}
+
+      <Footer/>
     </div>
   );
 };

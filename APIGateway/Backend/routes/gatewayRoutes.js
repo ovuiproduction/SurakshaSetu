@@ -9,6 +9,7 @@ const rateLimit = require("express-rate-limit");
 dotenv.config();
 
 const logEvent = require("../utils/logEvent");
+const maskData = require("./maskingData");
 
 const router = express.Router();
 
@@ -104,14 +105,14 @@ router.post("/get-user-data", authenticateJWT, apiLimiter, async (req, res) => {
         { userId, scope },
         { headers: { "Content-Type": "application/json" } }
       );
-
+      const maskedData = maskData(scope,response.data);
       const payload = {
         userId,
         clientId,
         consentId,
         purpose,
         fields: scope,
-        data: response.data,
+        data: maskedData,
         issuedAt: Date.now(),
       };
 

@@ -14,7 +14,7 @@
 }
 
 .admin-dashboard {
-  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   color: var(--text-dark);
   min-height: 100vh;
   background-color: #f5f7fa;
@@ -31,8 +31,8 @@
 
 .back-link {
   position: absolute;
-  top:1rem;
-  right:1rem;
+  top: 1rem;
+  right: 1rem;
   color: #fff;
   text-decoration: none;
   font-size: 0.9rem;
@@ -68,7 +68,7 @@
 }
 
 .dashboard-content {
-  display: flex;
+  display: block;
   padding: 1.5rem;
   gap: 1.5rem;
 }
@@ -144,6 +144,9 @@
 }
 
 .stats-section {
+  display: block;
+}
+.stats-section-block {
   display: flex;
   gap: 1rem;
 }
@@ -200,8 +203,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* LogViewer specific styles */
@@ -217,20 +224,22 @@
 .log-viewer-header span {
   font-weight: 600;
   color: var(--primary-blue);
-  font-size: 1.1rem;
+  font-size: 1.3rem;
 }
-
-.log-count, .filtered-count {
-  background-color: var(--accent-blue);
+.log-viewer-header span span {
+  font-size:0.8rem;
+}
+.log-count,
+.filtered-count {
+  background-color: rgba(0, 0, 0, 0.08);
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
-  font-size: 0.8rem;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
 }
 
 .filtered-count {
-  background-color: var(--success-green);
+  background-color: rgba(0, 0, 0, 0.08);
   margin-left: 0.5rem;
 }
 
@@ -279,18 +288,18 @@
   .dashboard-content {
     flex-direction: column;
   }
-  
+
   .control-panel {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
   }
-  
+
   .control-section {
     flex: 1;
     min-width: 200px;
   }
-  
+
   .stats-section {
     justify-content: flex-start;
   }
@@ -300,11 +309,11 @@
   .dashboard-header {
     padding: 1rem;
   }
-  
+
   .dashboard-content {
     padding: 1rem;
   }
-  
+
   .log-table {
     display: block;
     overflow-x: auto;
@@ -391,8 +400,8 @@
   padding-left: 1rem;
 }
 
-.audit-button{
-   background-color: var(--primary-blue);
+.audit-button {
+  background-color: var(--primary-blue);
   color: var(--white);
   border: none;
   padding: 0.75rem 1.75rem;
@@ -412,9 +421,8 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-
 .audit-button:hover {
-  background-color:#0a1f3a;
+  background-color: #0a1f3a;
   box-shadow: var(--shadow-sm);
   transform: translateY(-1px);
 }

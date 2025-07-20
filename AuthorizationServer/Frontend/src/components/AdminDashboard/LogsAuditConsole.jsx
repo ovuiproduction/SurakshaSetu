@@ -129,29 +129,6 @@ const LogsAuditConsole = () => {
             )}
           </div>
 
-          <div className="stats-section">
-            <h3 className="section-title">Statistics</h3>
-            <div className="stat-card">
-              <div className="stat-value">{logs.length}</div>
-              <div className="stat-label">Total Logs</div>
-            </div>
-            {userIdFilter && (
-              <div className="stat-card">
-                <div className="stat-value">
-                  {
-                    logs.filter(
-                      (log) =>
-                        log.userId &&
-                        log.userId
-                          .toLowerCase()
-                          .includes(userIdFilter.toLowerCase())
-                    ).length
-                  }
-                </div>
-                <div className="stat-label">Filtered Logs</div>
-              </div>
-            )}
-          </div>
         </div>
 
         <div className="log-display">

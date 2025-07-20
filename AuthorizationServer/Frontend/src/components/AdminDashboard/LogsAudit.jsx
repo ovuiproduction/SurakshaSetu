@@ -21,7 +21,8 @@ const LogsAudit = ({
       const response = await generateAuditReport(
         logs,
         selectedVendorId,
-        selectedVendorObj.orgName
+        selectedVendorObj.orgName,
+        selectedVendorObj.email
       );
       setAuditReport(response);
     } catch (err) {
@@ -50,9 +51,10 @@ const LogsAudit = ({
       <div className="log-viewer-header">
         <span>
           Transaction Logs
-          <span className="log-count">{logs.length}</span>
+          <span className="log-count">Total Logs : {logs.length}</span>
           {userIdFilter && (
             <span className="filtered-count">
+              Filtered Logs : 
               {
                 logs.filter((log) =>
                   log.userId?.toLowerCase().includes(userIdFilter.toLowerCase())

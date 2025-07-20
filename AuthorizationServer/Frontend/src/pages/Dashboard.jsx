@@ -9,6 +9,7 @@ import ConsentModal from "../components/ConsentModal";
 import RequestStatusBox from "../components/RequestStatusBox";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import AuditReportsTab from "../components/VendorDashboard/AuditReportsTab";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const Dashboard = () => {
       const res = await axios.get(
         `http://localhost:${AUTH_SERVER_PORT}/api/vendor-data/fetch-records`,
         {
-          params :  { clientId: vendor.clientId },
+          params: { clientId: vendor.clientId },
           header: {
             "content-type": "application/json",
           },
@@ -87,7 +88,7 @@ const Dashboard = () => {
       const res = await axios.get(
         `http://localhost:${AUTH_SERVER_PORT}/api/consent/get-vendor-history`,
         {
-          params :  { clientId: vendor.clientId },
+          params: { clientId: vendor.clientId },
           header: {
             "content-type": "application/json",
           },
@@ -112,7 +113,7 @@ const Dashboard = () => {
       const res = await axios.get(
         `http://localhost:${AUTH_SERVER_PORT}/api/vendor/fetch-callbacks`,
         {
-          params :  { clientId: vendor.clientId },
+          params: { clientId: vendor.clientId },
           header: {
             "content-type": "application/json",
           },
@@ -137,7 +138,7 @@ const Dashboard = () => {
       const res = await axios.get(
         `http://localhost:${AUTH_SERVER_PORT}/api/vendor/fetch-tokens`,
         {
-          params :  { clientId: vendor.clientId },
+          params: { clientId: vendor.clientId },
           header: {
             "content-type": "application/json",
           },
@@ -193,7 +194,6 @@ const Dashboard = () => {
       setResponseModal(true);
     }
   };
-
 
   const handleRequestData = async (token) => {
     let message = "";
@@ -308,6 +308,14 @@ const Dashboard = () => {
             onClick={() => setActiveTab("scope")}
           >
             <i className="icon-shield"></i> Access Scope
+          </button>
+          <button
+            className={`tab-btn ${
+              activeTab === "auditreports" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("auditreports")}
+          >
+            <i className="icon-shield"></i> Audit Reports
           </button>
         </div>
 
@@ -489,7 +497,14 @@ const Dashboard = () => {
                     </thead>
                     <tbody>
                       {issuedTokens.map((token, idx) => (
-                        <tr key={idx}>
+                        <tr
+                          key={idx}
+                          className={
+                            new Date(token.expiresAt) < new Date()
+                              ? "expired"
+                              : ""
+                          }
+                        >
                           <td className="date-time">
                             {new Date(token.issuedAt).toLocaleString()}
                           </td>
@@ -660,6 +675,19 @@ const Dashboard = () => {
                     })}
                   </div>
                 </div>
+              </div>
+            </section>
+          )}
+
+          {activeTab === "auditreports" && (
+            <section className="data-card">
+              <div className="card-header">
+                <h3>
+                  <i className="icon-shield"></i> Audit Reports
+                </h3>
+              </div>
+              <div className="card-body">
+                <AuditReportsTab vendor={vendor} />
               </div>
             </section>
           )}

@@ -10,13 +10,16 @@ const AUTH_SERVER_PORT = process.env.REACT_APP_AUTH_SERVER_PORT;
 const AVAILABLE_FIELDS = [
   "kyc:name",
   "kyc:pan",
+  "kyc:aadhaar",
   "kyc:dob",
   "kyc:gender",
+  "kyc:address",
   "contact:email",
   "contact:phone",
-  "account:number",
-  "account:balance",
-  "transaction:summary",
+  "account:accountNumber",
+  "account:bankBalance",
+  "account:salary",
+  "transactions:transactions",
 ];
 
 const ConsentModal = ({ vendor, onClose }) => {

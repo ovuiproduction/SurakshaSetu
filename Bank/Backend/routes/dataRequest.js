@@ -6,16 +6,18 @@ router.post("/get-data", async (req, res) => {
   const { userId, scope } = req.body;
 
   const fieldMap = {
-    "kyc:name": "fullName",
+    "kyc:name": "name",
     "kyc:pan": "pan",
+    "kyc:aadhaar": "aadhaar",
     "kyc:dob": "dob",
+    "kyc:gender": "gender",
+    "kyc:address":"address",
     "contact:email": "email",
     "contact:phone": "phone",
-    "kyc:gender": "gender",
-    "address": "address",
     "account:accountNumber": "accountNumber",
     "account:salary": "salary",
     "account:bankBalance": "bankBalance",
+    "transactions:transactions": "transactions",
   };
 
   try {
@@ -23,9 +25,7 @@ router.post("/get-data", async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Translate scope keys to actual DB field names
-    const fieldsToSend = scope
-      .map((s) => fieldMap[s])
-      .filter(Boolean); // Remove undefined mappings
+    const fieldsToSend = scope.map((s) => fieldMap[s]).filter(Boolean); // Remove undefined mappings
 
     const filteredData = fieldsToSend.reduce((acc, field) => {
       if (user.hasOwnProperty(field)) {
@@ -40,6 +40,5 @@ router.post("/get-data", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 
 module.exports = router;

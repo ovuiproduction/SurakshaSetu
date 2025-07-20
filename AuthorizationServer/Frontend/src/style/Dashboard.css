@@ -695,3 +695,13 @@ tr:hover {
 .action-btn:hover::after {
   opacity: 0.1;
 }
+
+
+tr.expired {
+  opacity: 0.7;
+  background-color: #fff8f8;
+}
+
+tr.expired td {
+  color: #999;
+}

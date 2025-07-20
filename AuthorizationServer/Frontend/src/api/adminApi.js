@@ -22,7 +22,7 @@ export const fetchLogsByVendor = async (vendorId) => {
   const response = await axios.get(
     `${AUTH_SERVER_BASE_URL}/api/admin/fetch-logs`,
     {
-      params:{ vendorId },
+      params: { vendorId },
       headers: {
         "Content-Type": "application/json",
       },
@@ -35,7 +35,7 @@ export const fetchAuditReportByVendor = async (vendorId) => {
   const response = await axios.get(
     `${AUTH_SERVER_BASE_URL}/api/admin/audit/fetch-report`,
     {
-       params:{ vendorId:vendorId },
+      params: { vendorId: vendorId },
       headers: {
         "Content-Type": "application/json",
       },
@@ -46,16 +46,22 @@ export const fetchAuditReportByVendor = async (vendorId) => {
 
 export const fetchAllAuditReport = async () => {
   const response = await axios.get(
-    `${AUTH_SERVER_BASE_URL}/api/admin/audit/fetch-reports`
+    `${AUTH_SERVER_BASE_URL}/api/admin/audit/fetch-all-reports`
   );
   return response.data;
 };
 
-const saveAuditReport = async (report, logs, vendorId, vendorName) => {
+const saveAuditReport = async (
+  report,
+  logs,
+  vendorId,
+  vendorName,
+  vendorEmail
+) => {
   try {
     const response = await axios.put(
       `${AUTH_SERVER_BASE_URL}/api/admin/audit/save-report`,
-      { logs, vendorId, vendorName, report },
+      { logs, vendorId, vendorName, report, vendorEmail },
       {
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +74,12 @@ const saveAuditReport = async (report, logs, vendorId, vendorName) => {
   }
 };
 
-export const generateAuditReport = async (logs, vendorId, vendorName) => {
+export const generateAuditReport = async (
+  logs,
+  vendorId,
+  vendorName,
+  vendorEmail
+) => {
   try {
     const response = await axios.post(
       `${AUDIT_SERVER_URL}/audit/generate-report`,
@@ -79,7 +90,13 @@ export const generateAuditReport = async (logs, vendorId, vendorName) => {
         },
       }
     );
-    saveAuditReport(response.data.response, logs, vendorId, vendorName);
+    saveAuditReport(
+      response.data.response,
+      logs,
+      vendorId,
+      vendorName,
+      vendorEmail
+    );
     return response.data.response;
   } catch (err) {
     return "Error in Audit report generation.";
@@ -106,4 +123,18 @@ export const fetchGatewayServerLogs = async () => {
   } catch (err) {
     console.error("Error fetching logs:", err);
   }
+};
+
+export const fetctAuditReports = async (vendorId) => {
+  const response = await axios.get(
+    `${AUTH_SERVER_BASE_URL}/api/admin/audit/fetch-reports`,
+    {
+      params: { vendorId: vendorId },
+
+      headers: {
+        "content-type": "application/json",
+      },
+    }
+  );
+  return response.data;
 };

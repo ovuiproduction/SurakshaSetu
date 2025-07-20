@@ -1,0 +1,51 @@
+/* Admin Footer CSS */
+:root {
+  --dark-blue: #0a192f;
+  --medium-blue: #162a4a;
+  --text-light: #e6f1ff;
+  --text-muted: #8892b0;
+}
+
+.admin-footer {
+  position:absolute;
+  bottom: 0px;
+  width:100%;
+  left:0px;
+  background: linear-gradient(135deg, var(--dark-blue), var(--medium-blue));
+  padding: 1.2rem 2rem;
+  border-top: 1px solid rgba(100, 149, 237, 0.1);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.admin-footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.admin-footer-left p:first-child {
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.admin-footer-right {
+  color: var(--text-muted);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .admin-footer-container {
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+  }
+}

@@ -10,7 +10,8 @@ const SENSITIVE_KEYS = [
   "phone",
   "otp",
   "clientsecret",
-  "signature"
+  "signature",
+  "contact"
 ];
 
 const maskSensitiveFields = (input) => {
