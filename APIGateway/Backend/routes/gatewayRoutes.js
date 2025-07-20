@@ -10,10 +10,11 @@ dotenv.config();
 
 const logEvent = require("../utils/logEvent");
 const maskData = require("./maskingData");
+const { addEncryptedWatermark } = require("../utils/watermark");
 
 const router = express.Router();
 
-// ✅ Rate limiter per clientId
+
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 100,
@@ -28,7 +29,7 @@ const apiLimiter = rateLimit({
   message: "API rate limit exceeded. Try again later.",
 });
 
-// ✅ Middleware to authenticate JWT
+
 const authenticateJWT = async (req, res, next) => {
   console.log("data request jwtauth");
   const authHeader = req.headers.authorization;
@@ -62,7 +63,7 @@ const authenticateJWT = async (req, res, next) => {
   }
 };
 
-// ✅ Actual route handler
+
 router.post("/get-user-data", authenticateJWT, apiLimiter, async (req, res) => {
   const { clientId, sub: userId, scope, purpose, consentId } = req.user;
   const { tokenId } = req.body;
@@ -105,14 +106,24 @@ router.post("/get-user-data", authenticateJWT, apiLimiter, async (req, res) => {
         { userId, scope },
         { headers: { "Content-Type": "application/json" } }
       );
-      const maskedData = maskData(scope,response.data);
+      const rawData = response.data;
+      const maskedData = maskData(scope, rawData);
+
+      const { dataWithWatermark, encryptedWatermark, issuedAt } =
+        addEncryptedWatermark(maskedData, {
+          clientId,
+          userId,
+          consentId,
+          tokenId,
+        });
+
       const payload = {
         userId,
         clientId,
         consentId,
         purpose,
         fields: scope,
-        data: maskedData,
+        data: dataWithWatermark,
         issuedAt: Date.now(),
       };
 
@@ -134,6 +145,10 @@ router.post("/get-user-data", authenticateJWT, apiLimiter, async (req, res) => {
           statusCode: 200,
           status: "success",
           message: msg,
+        },
+        watermark: {
+          encrypted: encryptedWatermark,
+          issuedAt: issuedAt,
         },
       });
       return res.status(200).json({ payload, signature });

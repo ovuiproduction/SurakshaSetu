@@ -23,7 +23,7 @@ function generateAccountNumber() {
 // ➤ Register user
 router.post("/register-user", async (req, res) => {
   try {
-    const { fullName, email, phone, dob,gender, pan, address, salary } = req.body;
+    const { name, email, phone, dob,gender, pan, address, salary,aadhaar } = req.body;
    
     const userId = `USER-${uuidv4().slice(0, 8).toUpperCase()}`;
 
@@ -31,13 +31,14 @@ router.post("/register-user", async (req, res) => {
 
     const newUser = new User({
       userId,
-      fullName,
+      name,
       email,
       phone,
       dob,
       gender,
       pan,
       address,
+      aadhaar,
       accountNumber,
       salary,
       bankBalance:0
@@ -55,16 +56,18 @@ router.post("/login/request-otp", async (req, res) => {
   const { email } = req.body;
 
   try {
+    console.log("ok");
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
-
+   
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpiry = new Date(Date.now() + 5 * 60000); // 5 minutes expiry
 
     user.otp = otp;
     user.otpExpiry = otpExpiry;
+    console.log("ok");
     await user.save();
-
+     console.log("ok");
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,

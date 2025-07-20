@@ -4,22 +4,23 @@ import "../style/UserRegistration.css";
 
 const BANK_SERVER_PORT = process.env.REACT_APP_BANK_SERVER_PORT;
 
-const SignupModal = ({goLogin,onClose}) => {
+const SignupModal = ({ goLogin, onClose }) => {
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     phone: "",
     dob: "",
     gender: "male",
+    aadhaar: "",
     pan: "",
     address: "",
     salary: "",
   });
 
-  const [status, setStatus] = useState({ 
-    loading: false, 
-    message: "", 
-    error: false 
+  const [status, setStatus] = useState({
+    loading: false,
+    message: "",
+    error: false,
   });
 
   const handleChange = (e) => {
@@ -39,29 +40,30 @@ const SignupModal = ({goLogin,onClose}) => {
 
     try {
       const res = await axios.post(
-        `http://localhost:${BANK_SERVER_PORT}/api/auth/register-user`, 
+        `http://localhost:${BANK_SERVER_PORT}/api/auth/register-user`,
         formData,
         {
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
-      
-      setStatus({ 
-        loading: false, 
-        message: "User registration successful! Account details sent to email.", 
-        error: false 
+
+      setStatus({
+        loading: false,
+        message: "User registration successful! Account details sent to email.",
+        error: false,
       });
 
       // Reset form
       setFormData({
-        fullName: "",
+        name: "",
         email: "",
         phone: "",
         dob: "",
         gender: "male",
         pan: "",
+        aadhaar: "",
         address: "",
         salary: "",
       });
@@ -69,8 +71,9 @@ const SignupModal = ({goLogin,onClose}) => {
     } catch (err) {
       setStatus({
         loading: false,
-        message: err.response?.data?.message || 
-               "Registration failed. Please check your details and try again.",
+        message:
+          err.response?.data?.message ||
+          "Registration failed. Please check your details and try again.",
         error: true,
       });
     }
@@ -79,7 +82,7 @@ const SignupModal = ({goLogin,onClose}) => {
   return (
     <div className="registration-container">
       <div>
-        <button onClick={onClose} >Close</button>
+        <button onClick={onClose}>Close</button>
       </div>
       <div className="registration-header">
         <h2>New Customer Registration</h2>
@@ -93,14 +96,16 @@ const SignupModal = ({goLogin,onClose}) => {
           {/* Personal Information */}
           <div className="form-section">
             <h3 className="section-title">Personal Information</h3>
-            
+
             <div className="form-group">
-              <label htmlFor="fullName">Full Legal Name <span className="required">*</span></label>
+              <label htmlFor="fullName">
+                Full Legal Name <span className="required">*</span>
+              </label>
               <input
-                id="fullName"
-                name="fullName"
+                id="name"
+                name="name"
                 type="text"
-                value={formData.fullName}
+                value={formData.name}
                 onChange={handleChange}
                 placeholder="As per government ID"
                 required
@@ -108,7 +113,9 @@ const SignupModal = ({goLogin,onClose}) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">Email Address <span className="required">*</span></label>
+              <label htmlFor="email">
+                Email Address <span className="required">*</span>
+              </label>
               <input
                 id="email"
                 name="email"
@@ -121,7 +128,9 @@ const SignupModal = ({goLogin,onClose}) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="phone">Mobile Number <span className="required">*</span></label>
+              <label htmlFor="phone">
+                Mobile Number <span className="required">*</span>
+              </label>
               <input
                 id="phone"
                 name="phone"
@@ -136,7 +145,9 @@ const SignupModal = ({goLogin,onClose}) => {
 
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="dob">Date of Birth <span className="required">*</span></label>
+                <label htmlFor="dob">
+                  Date of Birth <span className="required">*</span>
+                </label>
                 <input
                   id="dob"
                   name="dob"
@@ -161,15 +172,33 @@ const SignupModal = ({goLogin,onClose}) => {
                   <option value="prefer-not-to-say">Prefer not to say</option>
                 </select>
               </div>
+              <div className="form-group">
+                <label htmlFor="pan">
+                 Aadhaar Number <span className="required">*</span>
+                </label>
+                <input
+                  id="aadhaar"
+                  name="aadhaar"
+                  type="text"
+                  value={formData.aadhaar}
+                  onChange={handleChange}
+                  placeholder="123456789325"
+                  pattern="[0-9]{12}"
+                  title="Enter valid aadhaar no."
+                  required
+                />
+              </div>
             </div>
           </div>
 
           {/* Financial Information */}
           <div className="form-section">
             <h3 className="section-title">Financial Information</h3>
-            
+
             <div className="form-group">
-              <label htmlFor="pan">PAN Number <span className="required">*</span></label>
+              <label htmlFor="pan">
+                PAN Number <span className="required">*</span>
+              </label>
               <input
                 id="pan"
                 name="pan"
@@ -184,7 +213,9 @@ const SignupModal = ({goLogin,onClose}) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="salary">Monthly Salary (₹) <span className="required">*</span></label>
+              <label htmlFor="salary">
+                Monthly Salary (₹) <span className="required">*</span>
+              </label>
               <input
                 id="salary"
                 name="salary"
@@ -201,7 +232,7 @@ const SignupModal = ({goLogin,onClose}) => {
           {/* Address Information */}
           <div className="form-section">
             <h3 className="section-title">Address Information</h3>
-            
+
             <div className="form-group">
               <label htmlFor="address">Full Address</label>
               <textarea
@@ -222,8 +253,8 @@ const SignupModal = ({goLogin,onClose}) => {
             Your information is protected with 256-bit encryption
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="submit-btn"
             disabled={status.loading}
           >
@@ -238,7 +269,9 @@ const SignupModal = ({goLogin,onClose}) => {
           </button>
 
           {status.message && (
-            <div className={`status-message ${status.error ? "error" : "success"}`}>
+            <div
+              className={`status-message ${status.error ? "error" : "success"}`}
+            >
               {status.message}
             </div>
           )}

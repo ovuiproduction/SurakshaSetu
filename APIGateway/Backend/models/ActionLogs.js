@@ -38,6 +38,10 @@ const ActionLogSchema = new mongoose.Schema({
     },
     message: String,
   },
+   watermark: {
+    encrypted: { type: String }, // base64 encrypted watermark blob
+    issuedAt: { type: Date },
+  },
   
   timestamp: { type: Date, default: Date.now },
 });

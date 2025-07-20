@@ -6,7 +6,7 @@ const LandingPage = () => {
   return (
     <div className="landing-page-container">
       <div className="landing-page-header">
-        <div className="landing-page-logo">AuthSecure</div>
+        <div className="landing-page-logo">SecureSetu</div>
         <nav className="landing-page-nav">
           <Link to="/about">About</Link>
           <Link to="/docs">Documentation</Link>
@@ -17,7 +17,7 @@ const LandingPage = () => {
       
       <div className="landing-page-content">
         <div className="landing-page-hero">
-          <h1>Welcome to AuthSecure</h1>
+          <h1>Welcome to SecureSetu</h1>
           <p className="landing-page-subtitle">Enterprise-grade Authorization Server for Financial Platforms</p>
           
           <div className="landing-page-buttons">

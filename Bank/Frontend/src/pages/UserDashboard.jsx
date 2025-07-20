@@ -207,7 +207,7 @@ const UserDashboard = () => {
       <header className="dashboard-header">
         <div className="header-content">
           <div className="user-greeting">
-            <h1>Welcome back, {user?.fullName}</h1>
+            <h1>Welcome back, {user?.name}</h1>
             <p className="last-login">
               Last login: {new Date().toLocaleString()}
             </p>
