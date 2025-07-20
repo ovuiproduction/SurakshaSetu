@@ -4,11 +4,9 @@ const ActionLog = require('../models/ActionLogs');
 const Vendor = require("../models/vendor");
 const AuditReport = require("../models/AuditReports");
 const AuthServerLog = require("../models/AuthServerLog");
-const fs = require('fs');
-const path = require('path');
 
-router.post('/fetch-logs', async (req, res) => {
-  const { vendorId } = req.body;
+router.get('/fetch-logs', async (req, res) => {
+  const { vendorId } = req.query;
 
   if (!vendorId) {
     return res.status(400).json({ message: 'vendorId is required.' });
@@ -40,7 +38,7 @@ router.get('/fetch-vendors', async (req, res) => {
   }
 });
 
-router.post('/audit/save-report', async (req, res) => {
+router.put('/audit/save-report', async (req, res) => {
   const { logs, vendorId, vendorName, report } = req.body;
   
   try {
@@ -105,8 +103,8 @@ router.get('/audit/fetch-reports', async (req, res) => {
 });
 
 // Get reports for specific vendor
-router.post('/audit/fetch-report', async (req, res) => {
-  const { vendorId, timeRange } = req.body;
+router.get('/audit/fetch-report', async (req, res) => {
+  const { vendorId, timeRange } = req.query;
   
   try {
     if (!vendorId) {
@@ -147,11 +145,10 @@ router.post('/audit/fetch-report', async (req, res) => {
   }
 });
 
-
 router.get('/system-logs/authorization-server', async (req, res) => {
   try {
     const logs = await AuthServerLog.find()
-      .sort({ createdAt: -1 }) // Show newest first
+      .sort({ timestamp: -1 }) // Show newest first
       .limit(100);             // Limit logs for performance
 
     res.json({ logs });

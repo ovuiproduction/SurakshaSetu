@@ -3,12 +3,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require('dotenv').config();
+const logger = require("./utils/logger");
 
 const app = express();
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(logger);
 
 const PORT = process.env.PORT;
 const DB_URL = process.env.DB_URL;

@@ -57,10 +57,10 @@ const Dashboard = () => {
   // Fetch Data records
   const fetchDataRecord = async () => {
     try {
-      const res = await axios.post(
+      const res = await axios.get(
         `http://localhost:${AUTH_SERVER_PORT}/api/vendor-data/fetch-records`,
-        { clientId: vendor.clientId },
         {
+          params :  { clientId: vendor.clientId },
           header: {
             "content-type": "application/json",
           },
@@ -84,12 +84,10 @@ const Dashboard = () => {
   // Fetch Consent request history
   const fetchRequestHistory = async () => {
     try {
-      const res = await axios.post(
+      const res = await axios.get(
         `http://localhost:${AUTH_SERVER_PORT}/api/consent/get-vendor-history`,
         {
-          clientId: vendor.clientId,
-        },
-        {
+          params :  { clientId: vendor.clientId },
           header: {
             "content-type": "application/json",
           },
@@ -111,12 +109,10 @@ const Dashboard = () => {
   // Fetch callbacklogs
   const fetchCallbackLogs = async () => {
     try {
-      const res = await axios.post(
+      const res = await axios.get(
         `http://localhost:${AUTH_SERVER_PORT}/api/vendor/fetch-callbacks`,
         {
-          clientId: vendor.clientId,
-        },
-        {
+          params :  { clientId: vendor.clientId },
           header: {
             "content-type": "application/json",
           },
@@ -138,12 +134,10 @@ const Dashboard = () => {
   // fetch all issued tokens
   const fetchIssuedTokens = async () => {
     try {
-      const res = await axios.post(
+      const res = await axios.get(
         `http://localhost:${AUTH_SERVER_PORT}/api/vendor/fetch-tokens`,
         {
-          clientId: vendor.clientId,
-        },
-        {
+          params :  { clientId: vendor.clientId },
           header: {
             "content-type": "application/json",
           },
@@ -161,28 +155,6 @@ const Dashboard = () => {
       fetchIssuedTokens();
     }
   }, [vendor]);
-
-  // Request token _ callback received
-  // const handleRequestToken = async (payload) => {
-  //   const response = await axios.post(
-  //     `http://localhost:${AUTH_SERVER_PORT}/api/token/request-token`, // change to your auth server port
-  //     {
-  //       clientId: payload.clientId,
-  //       clientSecret: payload.clientSecret,
-  //       userId: payload.userId,
-  //       scope: payload.scope,
-  //       purpose: payload.purpose,
-  //       consentId: payload.consentId,
-  //     },
-  //     {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-  //   setResponseMsg(response.data.message);
-  //   setResponseModal(true);
-  // };
 
   const handleRequestToken = async (payload) => {
     try {
@@ -222,33 +194,6 @@ const Dashboard = () => {
     }
   };
 
-  // request data using issued token
-  // const handleRequestData = async (token) => {
-  //   console.log("data request initiated");
-  //   try {
-  //     const response = await axios.post(
-  //       `http://localhost:${AUTH_SERVER_PORT}/api/vendor/apigateway/data-req`,
-  //       {
-  //         jwtToken: token.token,
-  //         tokenId:token._id,
-  //         userId:token.userId,
-  //         clientId:token.clientId,
-  //         consentId:token.consentId
-  //       },
-  //       {
-  //         header: {
-  //           "content-type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     console.log("Response received:", response.data.message);
-  //     setResponseMsg(response.data.message);
-  //     setResponseModal(true);
-  //     console.log(responseModal);
-  //   } catch (err) {
-  //     console.error("Failed to fetchh data:", err);
-  //   }
-  // };
 
   const handleRequestData = async (token) => {
     let message = "";

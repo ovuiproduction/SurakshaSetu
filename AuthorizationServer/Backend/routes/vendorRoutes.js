@@ -248,7 +248,7 @@ router.post("/vendor/apigateway/data-req", async (req, res) => {
       let { userId, clientId, consentId, purpose, fields, data } = payload;
 
       try {
-        const storeResponse = await axios.post(
+        const storeResponse = await axios.put(
           `http://localhost:${process.env.PORT}/api/vendor-data/store-fetched-data`,
           {
             clientId: clientId, // from your vendor object
@@ -275,7 +275,7 @@ router.post("/vendor/apigateway/data-req", async (req, res) => {
             },
           });
           res.status(200).json({
-            message: "Callback sucessfull. Data fetched succesfully.",
+            message: "Callback sucessfull. Data Sent succesfully.",
           });
         }
       } catch (err) {
@@ -304,9 +304,9 @@ router.post("/vendor/apigateway/data-req", async (req, res) => {
   }
 });
 
-router.post("/vendor/fetch-callbacks", async (req, res) => {
+router.get("/vendor/fetch-callbacks", async (req, res) => {
   try {
-    const { clientId } = req.body; // Assuming vendor ID is available here after authentication
+    const { clientId } = req.query; // Assuming vendor ID is available here after authentication
 
     const callbacks = await CallbackLog.find({ clientId })
       .populate("consentId", "purpose scope status") // optional: populate consent data
@@ -321,12 +321,10 @@ router.post("/vendor/fetch-callbacks", async (req, res) => {
   }
 });
 
-router.post("/vendor/fetch-tokens", async (req, res) => {
+router.get("/vendor/fetch-tokens", async (req, res) => {
   try {
-    const { clientId } = req.body;
-
+    const { clientId } = req.query;
     const tokens = await IssuedToken.find({ clientId }).sort({ issuedAt: -1 }); // recent first
-
     res.status(200).json({ success: true, tokens });
   } catch (err) {
     res.status(500).json({

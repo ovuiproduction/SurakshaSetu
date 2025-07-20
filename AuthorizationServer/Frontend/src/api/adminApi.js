@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const AUTH_SERVER_BASE_URL = `http://localhost:${process.env.REACT_APP_AUTH_SERVER_PORT}`;
 const GATEWAY_SERVER_BASE_URL = `http://localhost:${process.env.REACT_APP_GATEWAY_SERVER_PORT}`;
 const BANK_SERVER_BASE_URL = `http://localhost:${process.env.REACT_APP_BANK_SERVER_PORT}`;
@@ -20,10 +19,10 @@ export const fetchAllUsers = async () => {
 };
 
 export const fetchLogsByVendor = async (vendorId) => {
-  const response = await axios.post(
+  const response = await axios.get(
     `${AUTH_SERVER_BASE_URL}/api/admin/fetch-logs`,
-    { vendorId },
     {
+      params:{ vendorId },
       headers: {
         "Content-Type": "application/json",
       },
@@ -33,10 +32,10 @@ export const fetchLogsByVendor = async (vendorId) => {
 };
 
 export const fetchAuditReportByVendor = async (vendorId) => {
-  const response = await axios.post(
+  const response = await axios.get(
     `${AUTH_SERVER_BASE_URL}/api/admin/audit/fetch-report`,
-    { vendorId },
     {
+       params:{ vendorId:vendorId },
       headers: {
         "Content-Type": "application/json",
       },
@@ -54,7 +53,7 @@ export const fetchAllAuditReport = async () => {
 
 const saveAuditReport = async (report, logs, vendorId, vendorName) => {
   try {
-    const response = await axios.post(
+    const response = await axios.put(
       `${AUTH_SERVER_BASE_URL}/api/admin/audit/save-report`,
       { logs, vendorId, vendorName, report },
       {

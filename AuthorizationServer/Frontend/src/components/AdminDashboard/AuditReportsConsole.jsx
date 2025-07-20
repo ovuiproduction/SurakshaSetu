@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { fetchAllVendors,fetchAllAuditReport } from "../../api/adminApi";
+import { fetchAllVendors, fetchAllAuditReport } from "../../api/adminApi";
 import AuditResponseDisplay from "./AuditResponseDisplay";
 import "../../style/AuditReportsConsole.css";
+import { Link } from "react-router-dom";
 
 const AuditReportsConsole = () => {
   const [reports, setReports] = useState([]);
@@ -30,7 +31,7 @@ const AuditReportsConsole = () => {
   }, []);
 
   const filteredReports = selectedVendor
-    ? reports.filter(report => report.vendorId === selectedVendor)
+    ? reports.filter((report) => report.vendorId === selectedVendor)
     : reports;
 
   const formatDate = (dateString) => {
@@ -39,12 +40,14 @@ const AuditReportsConsole = () => {
       month: "short",
       day: "numeric",
       hour: "2-digit",
-      minute: "2-digit"
+      minute: "2-digit",
     });
   };
 
   if (isLoading) {
-    return <div className="audit-reports-loading">Loading audit reports...</div>;
+    return (
+      <div className="audit-reports-loading">Loading audit reports...</div>
+    );
   }
 
   if (error) {
@@ -53,8 +56,8 @@ const AuditReportsConsole = () => {
 
   return (
     <div className="audit-reports-console">
-      <div className="audit-reports-header">
-        <h2>Audit Reports</h2>
+      <div className="monitor-header">
+       <h1>Audit Reports</h1>
         <div className="audit-reports-filter">
           <select
             value={selectedVendor}
@@ -69,6 +72,9 @@ const AuditReportsConsole = () => {
             ))}
           </select>
         </div>
+        <Link to="/admin/dashboard" className="back-link">
+          &larr; Back to Dashboard
+        </Link>
       </div>
 
       <div className="audit-reports-grid">

@@ -673,7 +673,7 @@ tr:hover {
 }
 
 .action-btn:hover {
-  background-color: var(--medium-blue);
+  background-color:#00395d;
   box-shadow: var(--shadow-sm);
   transform: translateY(-1px);
 }

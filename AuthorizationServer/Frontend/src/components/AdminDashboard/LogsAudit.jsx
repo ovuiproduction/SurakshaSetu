@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { generateAuditReport } from "../../api/adminApi";
-import AuditResponseDisplay from "../../components/AdminDashboard/AuditResponseDisplay";
+import AuditResponseDisplay from "./AuditResponseDisplay";
+import AuditReportLoader from './AuditReportLoader';
 
 const LogsAudit = ({
   logs,
@@ -123,7 +124,7 @@ const LogsAudit = ({
           </tbody>
         </table>
       </div>
-
+      <AuditReportLoader isLoading={isLoading} />
       {responseStatus && (
         <AuditResponseDisplay
           report={auditReport}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../style/MainAdminDashboard.css";
+import "../style/AdminDashboard.css";
 
 const AdminDashboard = () => {
   const dashboardCards = [
@@ -17,33 +17,33 @@ const AdminDashboard = () => {
       path: "/admin/audit-reports"
     },
     {
-      title: "Vendor Management",
-      description: "Manage third-party vendor permissions",
-      icon: "🏛️",
-      path: "/admin/vendors"
-    },
-    {
       title: "System Monitoring",
       description: "Real-time system activity dashboard",
       icon: "📊",
       path: "/admin/system-monitoring"
     },
     {
+      title: "Compliance",
+      description: "GDPR/DPDP compliance tools",
+      icon: "⚖️",
+      path: "/admin/compliance"
+    }, 
+    {
+      title: "Vendor Management",
+      description: "Manage third-party vendor permissions",
+      icon: "🏛️",
+      path: "/admin/vendors"
+    },
+     {
       title: "User Access",
       description: "Manage administrator permissions",
       icon: "👤",
       path: "/admin/user-access"
     },
-    {
-      title: "Compliance",
-      description: "GDPR/DPDP compliance tools",
-      icon: "⚖️",
-      path: "/admin/compliance"
-    }
   ];
 
   return (
-    <div className="main_admin-dashboard">
+     <div className="main_admin-dashboard">
       <div className="admin-dashboard__header">
         <h1 className="admin-dashboard__title">Security Administration</h1>
         <p className="admin-dashboard__subtitle">
@@ -74,6 +74,17 @@ const AdminDashboard = () => {
           ))}
         </div>
       </div>
+
+      <footer className="admin-dashboard__footer">
+        <div>
+          © {new Date().getFullYear()} Security Administration Portal | 
+          <a href="/privacy">Privacy Policy</a> | 
+          <a href="/terms">Terms of Service</a>
+        </div>
+        <div style={{ marginTop: '0.5rem' }}>
+          System Version: 2.4.1 | Last Updated: {new Date().getFullYear()}-{(new Date().getMonth()+1).toString().padStart(2, '0')}-{new Date().getDate().toString().padStart(2, '0')}
+        </div>
+      </footer>
     </div>
   );
 };

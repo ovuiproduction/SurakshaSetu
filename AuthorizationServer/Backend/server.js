@@ -42,6 +42,22 @@ app.use("/api/consent", consentRoutes);
 app.use("/api/vendor-data", thirdPartyRoutes);
 app.use("/api/admin", adminRoutes);
 
+const allowedIPs = ["127.0.0.1", "::1", "::ffff:127.0.0.1"]; // Localhost only
+
+app.use((req, res, next) => {
+  const clientIP = req.ip;
+
+  if (
+    req.method === "GET" &&
+    !allowedIPs.includes(clientIP)
+  ) {
+    return res.status(403).json({ message: "GET requests from external sources are not allowed." });
+  }
+
+  next();
+});
+
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

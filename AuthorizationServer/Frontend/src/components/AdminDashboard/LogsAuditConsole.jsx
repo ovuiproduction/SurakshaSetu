@@ -6,7 +6,8 @@ import {
 } from "../../api/adminApi";
 import { VendorSelector, UserSelector } from "./Selectors";
 import LogsAudit from "./LogsAudit";
-import "../../style/AdminDashboard.css";
+import "../../style/LogsAuditConsole.css";
+import { Link } from "react-router-dom";
 
 const LogsAuditConsole = () => {
   const [vendors, setVendors] = useState([]);
@@ -92,6 +93,9 @@ const LogsAuditConsole = () => {
             <strong>Users:</strong> {users.length}
           </span>
         </div>
+        <Link to="/admin/dashboard" className="back-link">
+          &larr; Back to Dashboard
+        </Link>
       </div>
 
       <div className="dashboard-content">

@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const FetchedUserData = require("../models/FetchedUserData");
 
-router.post("/store-fetched-data", async (req, res) => {
+router.put("/store-fetched-data", async (req, res) => {
   try {
     const { clientId, userId, consentId, purpose, fields, data } = req.body;
 
@@ -35,9 +35,9 @@ router.post("/store-fetched-data", async (req, res) => {
   }
 });
 
-router.post("/fetch-records", async (req, res) => {
+router.get("/fetch-records", async (req, res) => {
   try {
-    const { clientId } = req.body;
+    const { clientId } = req.query;
     const records = await FetchedUserData.find({ clientId: clientId }).sort({
       fetchedAt: -1,
     }); // most recent first

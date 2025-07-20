@@ -358,17 +358,6 @@ router.post("/revoke", async (req, res) => {
   }
 });
 
-router.post("/get-consent-data", async (req, res) => {
-  const { userId } = req.body;
-  const consentList = await ConsentRequest.find({ userId: userId });
-  res.status(200).json({ consentList });
-});
-
-router.post("/get-vendor-history", async (req, res) => {
-  const { clientId } = req.body;
-  const consentList = await ConsentRequest.find({ clientId: clientId });
-  res.status(200).json({ consentList });
-});
 
 router.post("/verify-status", async (req, res) => {
   const { consentId } = req.body;
@@ -397,6 +386,19 @@ router.post("/verify-status", async (req, res) => {
   res
     .status(200)
     .json({ message: "Consent is valid & approved", status: true });
+});
+
+
+router.post("/get-consent-data", async (req, res) => {
+  const { userId } = req.body;
+  const consentList = await ConsentRequest.find({ userId: userId });
+  res.status(200).json({ consentList });
+});
+
+router.get("/get-vendor-history", async (req, res) => {
+  const { clientId } = req.query;
+  const consentList = await ConsentRequest.find({ clientId: clientId });
+  res.status(200).json({ consentList });
 });
 
 module.exports = router;

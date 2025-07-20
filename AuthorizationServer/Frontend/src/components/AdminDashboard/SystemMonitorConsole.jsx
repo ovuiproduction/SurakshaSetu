@@ -5,13 +5,14 @@ import {
 } from "../../api/adminApi";
 import "../../style/SystemMonitorConsole.css";
 import SystemLogView from "./SystemLogView";
+import { Link } from "react-router-dom";
 
 const SystemMonitorConsole = () => {
   const [authLogs, setAuthLogs] = useState([]);
   const [gatewaylogs, setGatewayLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [serverType, setServerType] = useState("auth");
-
+ const [requestType, setRequestType] = useState("all");
   useEffect(() => {
     if (authLogs && authLogs.length == 0) {
       fetchAuthLogs();
@@ -47,9 +48,17 @@ const SystemMonitorConsole = () => {
   const refreshLogs = () => {
     if (serverType === "auth") {
       fetchAuthLogs();
-    }else{
+    } else {
       fetchGatewayLogs();
     }
+  };
+
+  const getFilteredLogs = () => {
+    const logs = serverType === "auth" ? authLogs : gatewaylogs;
+
+    if (requestType === "all") return logs;
+
+    return logs.filter((log) => log.method === requestType);
   };
 
   return (
@@ -65,6 +74,9 @@ const SystemMonitorConsole = () => {
             {serverType === "auth" ? "Authorization Server" : "API Gateway"}
           </p>
         </div>
+        <Link to="/admin/dashboard" className="back-link">
+          &larr; Back to Dashboard
+        </Link>
       </header>
 
       {/* Main Content */}
@@ -88,6 +100,15 @@ const SystemMonitorConsole = () => {
           </div>
 
           <div className="refresh-controls">
+            <select
+              value={requestType}
+              onChange={(e) => setRequestType(e.target.value)}
+              className="request-type-select"
+            >
+              <option value="all">All Requests</option>
+              <option value="GET">GET Requests</option>
+              <option value="POST">POST Requests</option>
+            </select>
             <button
               className="refresh-btn"
               onClick={refreshLogs}
@@ -99,7 +120,7 @@ const SystemMonitorConsole = () => {
         </div>
 
         {/* Logs Display */}
-        <div className="logs-container">
+        {/* <div className="logs-container">
           {loading ? (
             <div className="loading-state">
               <div className="spinner"></div>
@@ -119,6 +140,26 @@ const SystemMonitorConsole = () => {
             <SystemLogView logs={authLogs} />
           ) : (
             <SystemLogView logs={gatewaylogs} />
+          )}
+        </div> */}
+         <div className="logs-container">
+          {loading ? (
+            <div className="loading-state">
+              <div className="spinner"></div>
+              <p>
+                Loading {serverType === "auth" ? "Auth Server" : "API Gateway"}{" "}
+                logs...
+              </p>
+            </div>
+          ) : getFilteredLogs().length === 0 ? (
+            <div className="empty-state">
+              <p>
+                No {requestType !== "all" ? requestType + " " : ""}logs available for{" "}
+                {serverType === "auth" ? "Auth Server" : "API Gateway"}
+              </p>
+            </div>
+          ) : (
+            <SystemLogView logs={getFilteredLogs()} />
           )}
         </div>
       </main>

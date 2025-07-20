@@ -1,24 +1,51 @@
 const GatewayServerLog = require("../models/GatewayServerLog");
 
-const SENSITIVE_KEYS = ["password", "jwtToken", "token", "aadhar", "pan", "email", "phone"];
+const SENSITIVE_KEYS = [
+  "password",
+  "jwttoken",
+  "token",
+  "aadhar",
+  "pan",
+  "email",
+  "phone",
+  "otp",
+  "clientsecret",
+  "signature"
+];
 
-const maskSensitiveFields = (obj = {}) => {
-  const clone = { ...obj };
-  for (let key in clone) {
-    if (SENSITIVE_KEYS.includes(key.toLowerCase())) {
-      clone[key] = "****";
-    } else if (typeof clone[key] === "string" && clone[key].length > 100) {
-      clone[key] = clone[key].substring(0, 100) + "... [truncated]";
-    }
+const maskSensitiveFields = (input) => {
+  if (Array.isArray(input)) {
+    return input.map(maskSensitiveFields);
   }
-  return clone;
+
+  if (input !== null && typeof input === "object") {
+    const result = {};
+
+    for (const key in input) {
+
+      const lowerKey = key.toLowerCase();
+      const value = input[key];
+   
+      if (SENSITIVE_KEYS.includes(lowerKey)) {
+        result[key] = "****";
+      } else if (typeof value === "string" && value.length > 100) {
+        result[key] = value.slice(0, 100) + "... [truncated]";
+      } else {
+        result[key] = maskSensitiveFields(value);
+      }
+    }
+
+    return result;
+  }
+
+  return input;
 };
+
 
 const logger = (req, res, next) => {
   const start = Date.now();
 
-  // Only log important methods
-  if (!["POST", "PUT", "PATCH", "DELETE"].includes(req.method)) return next();
+  if (!["POST", "GET"].includes(req.method)) return next();
 
   const { method, url, body } = req;
   const sanitizedBody = maskSensitiveFields(body);
@@ -37,17 +64,31 @@ const logger = (req, res, next) => {
 
     const sanitizedResponse = maskSensitiveFields(responseBody);
 
-    const logEntry = new GatewayServerLog({
-      method,
-      url,
-      ip,
-      status: res.statusCode,
-      duration,
-      request: { body: sanitizedBody },
-      response: sanitizedResponse,
-    });
+    let logEntry;
+    if (method === "POST") {
+      logEntry = new GatewayServerLog({
+        method,
+        url,
+        ip,
+        status: res.statusCode,
+        duration,
+        request: { body: sanitizedBody },
+        response: sanitizedResponse,
+      });
+    } else if (method === "GET") {
+      logEntry = new GatewayServerLog({
+        method,
+        url,
+        ip,
+        status: res.statusCode,
+        duration,
+        request: { body: sanitizedBody },
+      });
+    }
 
-    logEntry.save().catch(console.error); // Fail silently to not affect flow
+    if (logEntry) {
+      logEntry.save().catch(console.error); // Fail silently to not affect flow
+    }
 
     return originalSend.call(this, data);
   };
