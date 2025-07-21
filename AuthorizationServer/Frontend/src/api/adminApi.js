@@ -103,6 +103,28 @@ export const generateAuditReport = async (
   }
 };
 
+export const generateDPDPReport = async (
+  logs,
+  vendorId,
+  vendorName,
+  vendorEmail
+) => {
+  try {
+    const response = await axios.post(
+      `${AUDIT_SERVER_URL}/audit/generate-dpdp-report`,
+      { logs, vendorName },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data.response;
+  } catch (err) {
+    return "Error in Audit report generation.";
+  }
+};
+
 export const fetchAuthServerLogs = async () => {
   try {
     const response = await axios.get(

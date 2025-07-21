@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../style/AuditReportLoader.css';
 
-const AuditReportLoader = ({ isLoading, message = "Generating audit report..." }) => {
+const AuditReportLoader = ({ isLoading, message = "Generating report..." }) => {
   if (!isLoading) return null;
 
   return (

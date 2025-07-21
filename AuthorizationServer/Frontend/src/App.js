@@ -8,8 +8,8 @@ import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import LogsAuditConsole from "./components/AdminDashboard/LogsAuditConsole";
 import AuditReportsConsole from "./components/AdminDashboard/AuditReportsConsole";
-// import ComplianceConsole from "./components/AdminDashboard/ComplianceConsole";
 import SystemMonitorConsole from "./components/AdminDashboard/SystemMonitorConsole";
+import RuleCheckEngine from "./components/AdminDashboard/RuleCheckEngine";
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/log-audit" element={<LogsAuditConsole />} />
         <Route path="/admin/audit-reports" element={<AuditReportsConsole />} />
-        {/* <Route path="/admin/compliance" element={<ComplianceConsole />} /> */}
+        <Route path="/admin/compliance" element={<RuleCheckEngine />} />
         <Route
           path="/admin/system-monitoring"
           element={<SystemMonitorConsole />}

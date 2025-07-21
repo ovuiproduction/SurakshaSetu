@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import "../../style/AuditResponseDisplay.css";
 
-const AuditResponseDisplay = ({ report, error, onClose, vendorName }) => {
+const AuditResponseDisplay = ({reportType, report, error, onClose, vendorName }) => {
   useEffect(() => {
     const element = document.getElementById("audit-report-container");
     if (element) {
@@ -15,7 +15,7 @@ const AuditResponseDisplay = ({ report, error, onClose, vendorName }) => {
     <div className="audit-container" >
     <div id="audit-report-container" className="audit-report-container">
       <div className="audit-report-header">
-        <h3>Audit Report for {vendorName}</h3>
+        <h3>{reportType} Report for {vendorName}</h3>
         <button onClick={onClose} className="close-button">
           ×
         </button>

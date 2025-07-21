@@ -1,0 +1,26 @@
+title Current Issue in Fintech Data Sharing
+
+participant User
+participant Vendor
+participant Bank
+
+== Step 1: Vendor Requests Data ==
+Vendor->Bank: Request user data (userId, scope)
+
+note over Bank: Authenticate vendor\nCheck generic user consent
+
+== Step 2: Bank Shares Data ==
+Bank->Vendor: Send full user profile
+
+note over Vendor: Receives more data than needed\n(e.g., full transaction history, PII)
+
+== Step 3: Data Misuse Risk ==
+note over Vendor: Stores or uses data beyond purpose\n(e.g., profiling, reselling)
+
+== Step 4: User Is Unaware ==
+User->Bank: What data was shared? Can I revoke?
+
+note over Bank: No real-time tracking,\nno granular control or revocation
+
+== Step 5: No Post-Access Visibility ==
+note over Bank: Cannot monitor how data is used\nNo expiry or enforcement

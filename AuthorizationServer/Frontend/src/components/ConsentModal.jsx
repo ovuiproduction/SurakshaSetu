@@ -67,6 +67,7 @@ const ConsentModal = ({ vendor, onClose }) => {
       setConsentReqStatus(
         err.response?.data?.message || "Consent initiation failed"
       );
+      setError(err.response?.data?.message || "Consent initiation failed");
       setConsentSent(true);
     } finally {
       setLoading(false);
@@ -146,10 +147,15 @@ const ConsentModal = ({ vendor, onClose }) => {
             </>
           ) : (
             <div className="success-message">
-              <p>✅ {consentReqStatus && <>{consentReqStatus}</>}</p>
+              
+              {(error && consentReqStatus) && (<p>{consentReqStatus}</p>)}
+              {(!error && consentReqStatus) && (<p>✅{consentReqStatus}</p>)}
+              {/* <p>✅ {consentReqStatus && <>{consentReqStatus}</>}</p> */}
               <button className="btn-primary" onClick={() => onClose()}>
                 Close
               </button>
+
+              
             </div>
           )}
         </div>

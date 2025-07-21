@@ -117,6 +117,7 @@ const AuditReportsConsole = () => {
 
       {selectedReport && (
         <AuditResponseDisplay
+          reportType={"Audit"}
           report={selectedReport.report}
           error={error}
           onClose={() => setSelectedReport(null)}

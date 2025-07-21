@@ -282,7 +282,7 @@ const UserDashboard = () => {
               <div className="details-grid">
                 <div className="detail-item">
                   <span className="detail-label">Full Name</span>
-                  <span className="detail-value">{user.fullName}</span>
+                  <span className="detail-value">{user.name}</span>
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Email</span>
