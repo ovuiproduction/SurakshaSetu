@@ -109,12 +109,11 @@ Introduces **two additional secure layers** between the Bank and Vendors:
 ## 🚀 Future Scope
 
 1. Integration with **SIEM (Security Information and Event Management)** tools.  
-2. **Machine Learning-based anomaly detection** for real-time log monitoring.  
-3. Expansion to cross-border data sharing compliance frameworks.  
-4. Integration with blockchain for **tamper-proof audit logs**.  
+2. **Machine Learning-based anomaly detection** for real-time log monitoring.   
+3. Integration with blockchain for **tamper-proof audit logs**.  
 
 ---
 
 ## 📜 License
 
-This project is licensed under the [**MIT License**]() – feel free to use and modify with attribution.  
+This project is licensed under the [**MIT License**](https://github.com/ovuiproduction/SurakshaSetu/blob/main/LICENSE) – feel free to use and modify with attribution.  
