@@ -121,3 +121,10 @@ Introduces **two additional secure layers** between the Bank and Vendors:
 ## 📜 License
 
 This project is licensed under the [**MIT License**](https://github.com/ovuiproduction/SurakshaSetu/blob/main/LICENSE) – feel free to use and modify with attribution.  
+
+## Problem Statemet Diagram
+
+![Problem Statement](Docs/ProblemStatement.png)
+
+## Objective Diagram 
+![Objective](Docs/Objective.png)
