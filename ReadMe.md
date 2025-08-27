@@ -53,11 +53,13 @@ Introduces **two additional secure layers** between the Bank and Vendors:
 
 ---
 
-## 🔄 System Flow
-
-### 🖼️ System Flow Diagram
+## 🖼️ System Flow Diagram
 
 ![System Flow](Docs/SurakshaSystemArchitecture.png)
+
+---
+
+## 🔄 System Flow
 
 1. **Vendor Registration**  
    - Vendor registers through the **Authorization Server**.  
@@ -122,9 +124,12 @@ Introduces **two additional secure layers** between the Bank and Vendors:
 
 This project is licensed under the [**MIT License**](https://github.com/ovuiproduction/SurakshaSetu/blob/main/LICENSE) – feel free to use and modify with attribution.  
 
-## Problem Statemet Diagram
+---
 
+## 📊 Supporting Diagrams
+
+### 📝 Problem Statement Diagram
 ![Problem Statement](Docs/ProblemStatement.png)
 
-## Objective Diagram 
+### 🎯 Objective Diagram
 ![Objective](Docs/Objective.png)
