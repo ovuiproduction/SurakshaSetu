@@ -55,6 +55,10 @@ Introduces **two additional secure layers** between the Bank and Vendors:
 
 ## 🔄 System Flow
 
+### 🖼️ System Flow Diagram
+
+![System Flow](./Docs/System Architecture.png)
+
 1. **Vendor Registration**  
    - Vendor registers through the **Authorization Server**.  
    - Receives a **Client ID** and **Client Secret** for authentication.  
