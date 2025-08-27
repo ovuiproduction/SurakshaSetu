@@ -53,7 +53,7 @@ Introduces **two additional secure layers** between the Bank and Vendors:
 
 ---
 
-## 🖼️ System Flow Diagram
+## 🖼️ System Architecture Diagram
 
 ![System Flow](Docs/SurakshaSystemArchitecture.png)
 
