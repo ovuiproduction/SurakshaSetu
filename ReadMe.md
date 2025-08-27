@@ -57,7 +57,7 @@ Introduces **two additional secure layers** between the Bank and Vendors:
 
 ### 🖼️ System Flow Diagram
 
-![System Flow](./Docs/System Architecture.png)
+![System Flow](Docs/SurakshaSystemArchitecture.png)
 
 1. **Vendor Registration**  
    - Vendor registers through the **Authorization Server**.  
